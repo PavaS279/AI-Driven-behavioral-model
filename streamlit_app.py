@@ -6,6 +6,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 #from snowflake.snowpark
 
 cnx = st.connection("snowflake")
