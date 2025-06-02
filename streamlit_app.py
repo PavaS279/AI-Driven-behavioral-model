@@ -1,4 +1,5 @@
 import streamlit as st
+from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
@@ -206,5 +207,20 @@ for idx, (i, row) in enumerate(segment_means.iterrows()):
     if idx % 2 == 1 and idx + 1 < len(segment_means):
         cols = st.columns(2)
 
+# Run PCA on processed feature set
+pca = PCA(n_components=2)
+pca_result = pca.fit_transform(processed_data_segment)
 
+# Prepare DataFrame for visualization
+df_pca = pd.DataFrame(pca_result, columns=['PC1', 'PC2'])
+df_pca['Segment'] = df_model_input['Segment'].values
+
+# Create and render PCA scatter plot
+fig, ax = plt.subplots(figsize=(8, 6))
+sns.scatterplot(data=df_pca, x='PC1', y='PC2', hue='Segment', palette='Set2', s=60, alpha=0.8, ax=ax)
+ax.set_title('PCA View of Customer Segments')
+ax.grid(True)
+
+st.subheader("PCA Projection of Customer Segments")
+st.pyplot(fig)
 
