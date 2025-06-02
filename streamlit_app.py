@@ -13,6 +13,8 @@ from math import pi
 cnx = st.connection("snowflake")
 session = cnx.session()
 
+st.title("Model Input Data Overview")
+st.subheader("Preview of Raw Features Used for Segmentation")
 df = session.table("DF_MODEL_INPUT")
 st.write(df)
 
