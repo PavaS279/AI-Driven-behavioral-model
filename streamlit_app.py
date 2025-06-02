@@ -1,7 +1,7 @@
 import streamlit as st
 #from snowflake.snowpark
 
-cnx = st.connections("snowflake")
+cnx = st.connection("snowflake")
 session = cnx.session()
 
 df = session.table("DF_MODEL_INPUT")
