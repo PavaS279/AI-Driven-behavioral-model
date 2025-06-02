@@ -6,5 +6,7 @@ session = cnx.session()
 
 df = session.table("DF_MODEL_INPUT")
 st.write(df)
-st.title("Hello, World!")
-st.write("Welcome to your first Streamlit app.")
+
+df_model_input = df.to_pandas()
+df_model_input
+
