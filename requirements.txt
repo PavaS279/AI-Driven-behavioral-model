@@ -1,0 +1,5 @@
+snowflake-snowpark-python
+streamlit
+matpotlib
+pandas
+seaborn
