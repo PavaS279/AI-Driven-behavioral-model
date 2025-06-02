@@ -39,7 +39,7 @@ if not df_model_input.empty:
 
     categorical_transformer = Pipeline(steps=[
         ('imputer', SimpleImputer(strategy='constant', fill_value='Unknown')),
-        ('onehot', OneHotEncoder(handle_unknown='ignore', sparse=False)) #Set sparse_output to False
+        ('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False)) #Set sparse_output to False
     ])
 
     # Create a column transformer to apply transformations to the correct columns
