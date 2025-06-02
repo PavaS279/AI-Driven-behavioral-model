@@ -159,10 +159,20 @@ else:
 
 
 
-plt.figure(figsize=(8, 5))
-sns.countplot(data=df_model_input, x='Segment', palette='Set2')
-plt.title('Customer Count per Segment')
-plt.xlabel('Segment')
-plt.ylabel('Number of Customers')
-plt.grid(True)
-plt.show()
+# plt.figure(figsize=(8, 5))
+# sns.countplot(data=df_model_input, x='Segment', palette='Set2')
+# plt.title('Customer Count per Segment')
+# plt.xlabel('Segment')
+# plt.ylabel('Number of Customers')
+# plt.grid(True)
+# plt.show()
+# Create the plot
+fig, ax = plt.subplots(figsize=(8, 5))
+sns.countplot(data=df_model_input, x='Segment', palette='Set2', ax=ax)
+ax.set_title('Customer Count per Segment')
+ax.set_xlabel('Segment')
+ax.set_ylabel('Number of Customers')
+ax.grid(True)
+
+# Display in Streamlit
+st.pyplot(fig)
