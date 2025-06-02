@@ -8,6 +8,7 @@ from sklearn.impute import SimpleImputer
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+import pandas as pd
 from math import pi
 #from snowflake.snowpark
 
