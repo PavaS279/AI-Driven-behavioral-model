@@ -174,6 +174,9 @@ ax.grid(True)
 # Display in Streamlit
 st.pyplot(fig)
 
+# Segment mean values
+segment_means = df_model_input.groupby('Segment')[available_segmentation_features].mean()
+categories = list(segment_means.columns)
 # Prepare radar charts in 2-column layout
 cols = st.columns(2)
 
