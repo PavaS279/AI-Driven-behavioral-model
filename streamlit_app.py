@@ -157,3 +157,12 @@ if not df_model_input.empty:
 else:
     print("df_model_input is empty, skipping segmentation.")
 
+
+
+plt.figure(figsize=(8, 5))
+sns.countplot(data=df_model_input, x='Segment', palette='Set2')
+plt.title('Customer Count per Segment')
+plt.xlabel('Segment')
+plt.ylabel('Number of Customers')
+plt.grid(True)
+plt.show()
