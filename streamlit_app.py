@@ -1,5 +1,5 @@
 import streamlit as st
-from snowflake.snowpark
+#from snowflake.snowpark
 
 cnx = st.connections("snowflake")
 session = cnx.session()
