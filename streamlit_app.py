@@ -98,14 +98,15 @@ if not df_model_input.empty:
                 kmeans.fit(processed_data_segment)
                 inertia.append(kmeans.inertia_)
 
-            if inertia: # Check if inertia list is populated
-                plt.figure(figsize=(8, 5))
-                plt.plot(k_range, inertia, marker='o')
-                plt.title('Elbow Method for Optimal K')
-                plt.xlabel('Number of Clusters (K)')
-                plt.ylabel('Inertia')
-                plt.grid(True)
-                plt.show() # Display the plot
+            if inertia:  # Check if inertia list is populated
+                fig, ax = plt.subplots(figsize=(8, 5))
+                ax.plot(k_range, inertia, marker='o')
+                ax.set_title('Elbow Method for Optimal K')
+                ax.set_xlabel('Number of Clusters (K)')
+                ax.set_ylabel('Inertia')
+                ax.grid(True)
+
+                st.pyplot(fig)  # Render the plot in Streamlit
 
                 # Choose K (e.g., K=4 based on the elbow plot)
                 OPTIMAL_K = 4 # You'd typically pick this from the plot
@@ -116,13 +117,13 @@ if not df_model_input.empty:
                     kmeans_final = KMeans(n_clusters=OPTIMAL_K, random_state=42, n_init=10)
                     df_model_input['Segment'] = kmeans_final.fit_predict(processed_data_segment)
 
-                    print(f"\nCustomers Segmented (K={OPTIMAL_K}):")
-                    print(df_model_input[['Segment'] + available_segmentation_features].head())
+                    # print(f"\nCustomers Segmented (K={OPTIMAL_K}):")
+                    # print(df_model_input[['Segment'] + available_segmentation_features].head())
 
                     # Analyze Segments
                     segment_summary = df_model_input.groupby('Segment')[available_segmentation_features].mean()
-                    print("\nSegment Summary (Means):")
-                    print(segment_summary)
+                    # print("\nSegment Summary (Means):")
+                    # print(segment_summary)
 
                     # Interpreting segments:
                     # Segment 0: Might be 'Low Value', low frequency/monetary
@@ -145,6 +146,9 @@ if not df_model_input.empty:
                     # Ensure labels cover all found segments if OPTIMAL_K changes
                     df_model_input['SegmentLabel'] = df_model_input['Segment'].map(lambda x: segment_labels.get(x, f"Segment {x}"))
                     print("\nSegment Labels:")
+                    # Display the updated DataFrame or just the labels
+                    st.subheader("Segment Labels")
+                    st.dataframe(df_model_input[['Segment', 'SegmentLabel']].drop_duplicates().reset_index(drop=True))
                     print(df_model_input[['Segment', 'SegmentLabel'] + available_segmentation_features].head())
                 else:
                     print("Not enough data or clusters to perform segmentation.")
@@ -158,14 +162,6 @@ else:
     print("df_model_input is empty, skipping segmentation.")
 
 
-
-# plt.figure(figsize=(8, 5))
-# sns.countplot(data=df_model_input, x='Segment', palette='Set2')
-# plt.title('Customer Count per Segment')
-# plt.xlabel('Segment')
-# plt.ylabel('Number of Customers')
-# plt.grid(True)
-# plt.show()
 # Create the plot
 fig, ax = plt.subplots(figsize=(8, 5))
 sns.countplot(data=df_model_input, x='Segment', palette='Set2', ax=ax)
