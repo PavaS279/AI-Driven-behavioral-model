@@ -7,6 +7,7 @@ from sklearn.impute import SimpleImputer
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+from math import pi
 #from snowflake.snowpark
 
 cnx = st.connection("snowflake")
@@ -172,3 +173,33 @@ ax.grid(True)
 
 # Display in Streamlit
 st.pyplot(fig)
+
+# Prepare radar charts in 2-column layout
+cols = st.columns(2)
+
+for idx, (i, row) in enumerate(segment_means.iterrows()):
+    values = row.values.flatten().tolist()
+    values += values[:1]  # repeat the first value to close the radar loop
+
+    angles = [n / float(len(categories)) * 2 * pi for n in range(len(categories))]
+    angles += angles[:1]
+
+    # Create radar chart
+    fig = plt.figure(figsize=(6, 6))
+    ax = plt.subplot(111, polar=True)
+    plt.xticks(angles[:-1], categories, color='grey', size=8)
+    ax.plot(angles, values, linewidth=2, linestyle='solid', label=f'Segment {i}')
+    ax.fill(angles, values, alpha=0.3)
+    plt.title(f'Segment {i} Profile (Radar)', size=12)
+
+    # Display in alternating columns (2 per row)
+    col = cols[idx % 2]
+    with col:
+        st.pyplot(fig)
+
+    # Start a new row after every 2 charts
+    if idx % 2 == 1 and idx + 1 < len(segment_means):
+        cols = st.columns(2)
+
+
+
